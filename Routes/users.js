@@ -37,7 +37,23 @@ router.post( '/editUser', authEdit, ( req, res ) => {
 
 router.get( '/', authGet, ( req, res ) => {
   try {
-    Controller.UserController.getAllUsers()
+    let skip = req.query.skip;
+    let limit = req.query.limit;
+    Controller.UserController.getAllUsers( skip, limit )
+      .then( result => {
+        res.status( 200 ).type( 'json' ).send( result )
+      } )
+      .catch( reason => reason )
+  } catch ( e ) {
+    res.status( 500 ).send( APP_CONSTANTS.ERRORS.UNKNOWN.UNKNOWN_ERROR )
+    throw e;
+  }
+} )
+
+router.get( '/allCoordinates', authGet, ( req, res ) => {
+  try {
+    console.log('entra')
+    Controller.UserController.getAllUsersLocation()
       .then( result => {
         res.status( 200 ).type( 'json' ).send( result )
       } )

@@ -199,8 +199,15 @@ class UsersController {
     } )
   }
 
-  static async getAllUsers() {
-    let allUsers = await DAOManager.getData( Models.User, {}, { userId: 1, uName: 1, lastname: 1, address: 1 } )
+  static async getAllUsersLocation() {
+    let allUsers = await DAOManager.getData( Models.User, {}, { userId: 1, uName: 1, coordinates: 1 } );
+    return allUsers;
+  }
+  
+  static async getAllUsers( skip, limit ) {
+    if ( skip == undefined ) skip = 0;
+    if ( limit == undefined ) limit = 10;
+    let allUsers = await DAOManager.getData( Models.User, {}, { userId: 1, uName: 1, lastname: 1, address: 1 } ).skip( skip ).limit( limit )
     return allUsers;
   }
 
