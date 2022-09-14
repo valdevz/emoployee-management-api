@@ -39,7 +39,7 @@ let ERRORS = {
 let ROLS = {
   ADMIN  : 'ADMIN',
   EDITOR : 'EDITOR',
-  VIEWER : 'VIEWER',
+  VIEWER : 'USER',
 }
 
 module.exports = {

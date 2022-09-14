@@ -11,10 +11,10 @@ class UsersController {
     return new Promise( async (resolve, reject ) => {
       try {
         let name = filter.name;
-        if ( typeof name != 'string' ) return reject( { code: 400, message: APP_CONSTANTS.ERRORS.BAD_REQUEST.VALUE_TYPE } )
+        if ( typeof name != 'string' || (name.length == 0) ) return reject( { code: 400, message: APP_CONSTANTS.ERRORS.BAD_REQUEST.VALUE_TYPE } )
         let skip = filter.skip != undefined ? filter.skip : 0;
         if ( Number( skip ) < 0 ) return reject( { code: 400, message: APP_CONSTANTS.ERRORS.BAD_REQUEST.VALUE_TYPE } )
-        let limit = filter.limit != undefined ? filter.limit : 10;
+        let limit = filter.limit != undefined ? filter.limit : 5;
         if ( Number( limit ) < 0 ) return reject( { code: 400, message: APP_CONSTANTS.ERRORS.BAD_REQUEST.VALUE_TYPE } )
         let query = [ 
           { 
@@ -30,6 +30,12 @@ class UsersController {
               uName: "$uName",
               lastname: "$lastname",
               secondLastname: "$secondLastname",
+              inCharge: "$inCharge",
+              emailId: "$emailId",
+              rol: "$rol",
+              dateOfBirth: "$dateOfBirth",
+              address: "$address",
+              phoneNo: "$phoneNo"
             }
           },
           { $limit: Number( limit ) },
@@ -90,7 +96,6 @@ class UsersController {
   
   static validRegFields(payload) {
     let regex = new RegExp( '[a-z0-9]+@[a-z]+\.[a-z]{2,3}' );
-    if( payload.emailId === undefined || payload.emailId === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_MAIL };
     if( payload.rol === undefined || payload.rol === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.ROL };
     if( payload.uName === undefined || payload.uName === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_NAME };
     if( payload.phoneNo === undefined || payload.phoneNo === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_PHONE };
@@ -101,7 +106,7 @@ class UsersController {
     if( typeof payload.address != 'object' && payload.address.length != 2 ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ADDRESS };
     if( typeof payload.inCharge != 'object' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ARRAY };
     if( payload.password ===  undefined ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_PASSWORD };
-    if ( ! regex.test( payload.emailId ) ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_MAIL };
+    if ( payload.emailId != undefined  || ! regex.test( payload.emailId ) ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_MAIL };
 
     return { status: false }
   }
@@ -201,7 +206,7 @@ class UsersController {
 
   static async getUserById( id ) {
     let query = { userId: id };
-    let data = { password: 0, updatedDate: 0, _id: 0 }
+    let data = { password: 0, updatedDate: 0, _id: 0, token: 0, createdDate: 0 }
     let user = await DAOManager.findOne( Models.User, query, data,  {} );
 
     if( user ) return { code: 201, message: { user } }

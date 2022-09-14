@@ -4,14 +4,16 @@ const express = require('express'),
       dbConfig = require('./Config/dbConfig'),
       Routes = require('./Routes/index'),
       bodyParser = require('body-parser'),
+      cors = require( 'cors' ),
       PORT = process.env.PORT || 4100;
       require("dotenv").config(),
       path = require('path');
 
 
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
 
 app.listen(PORT, () => {
   console.log(`API is running on port : ${PORT}`)

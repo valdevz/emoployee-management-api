@@ -7,6 +7,7 @@ router.post('/', loginlimiter, (req, res) => {
   try {
     Controllers.AuthController.login( req.body )
     .then( result => {
+      console.log('regresa: ', result)
       return res.status( result.code ).send( result.message );
     })
     .catch( err => {
