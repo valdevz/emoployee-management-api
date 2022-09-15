@@ -52,7 +52,6 @@ router.get( '/', authGet, ( req, res ) => {
 
 router.get( '/allCoordinates', authGet, ( req, res ) => {
   try {
-    console.log('entra')
     Controller.UserController.getAllUsersLocation()
       .then( result => {
         res.status( 200 ).type( 'json' ).send( result )

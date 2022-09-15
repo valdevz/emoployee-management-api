@@ -3,6 +3,7 @@ const express        = require( 'express' ),
       LoginRoutes    = require( './login' ),
       RegisterRoutes = require( './register' ),
       Users          = require( './users' ),
+      Suburb         = require( './suburb' ),
       Auth           = require( './auth' );
       swaggerJsdoc   = require( "swagger-jsdoc" ),
       { options }    = require( '../Lib/swaggerDoc' ),
@@ -15,6 +16,8 @@ app.use( '/login', LoginRoutes )
 app.use( '/users', Users )
 
 app.use( '/auth', Auth )
+
+app.use( '/suburbs', Suburb)
 
 const specs = swaggerJsdoc( options );
 app.use( '/',swaggerUi.serve, swaggerUi.setup( specs ) );
