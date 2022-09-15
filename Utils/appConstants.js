@@ -25,6 +25,11 @@ let ERRORS = {
     INVALID_ARRAY          : 'Invalid value for inCharge input.',
     INVALID_USERID         : 'Invalid value for userId input.',
   },
+  SUBURB: {
+    INVALID_NAME: 'Name of suburb must to be a string and can\'t be empty or undefined',
+    ALREADY_EXIST: 'This suburb already exist.',
+    COL_INVALID : 'Please avoid the word "Colonia" and their abbreviations'
+  },
   UNAUTHORIZED : {
     UNAUTHORIZED_TOKEN : 'Unauthorized token.',
     BAD_TOKEN : 'Bad token format.',
@@ -42,7 +47,12 @@ let ROLS = {
   VIEWER : 'USER',
 }
 
+let SUBURB = {
+  CREATED_SUCCESFULLY : 'Suburb created succesfully.'
+}
+
 module.exports = {
   ERRORS,
-  ROLS
+  ROLS,
+  SUBURB
 }
