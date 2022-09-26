@@ -9,7 +9,8 @@ router.post( '/', authEdit, ( req, res ) => {
   try {
     Controller.SuburbController.createSuburb( req.body )
       .then( result => {
-        res.status( result.code ).send( result.message )
+        console.log(result)
+        res.status( result.code ).type( 'json' ).send( result )
       } )
       .catch( result => {
         console.log(result)
@@ -20,6 +21,32 @@ router.post( '/', authEdit, ( req, res ) => {
     throw e;
   }
 } )
+
+router.put('/', authEdit, ( req, res ) => {
+  try {
+    Controller.SuburbController.editSuburb( req.body )
+    .then( result => {
+        res.status( 200 ).type( 'json' ).send( result )
+      })
+      .catch( err => res.status( 400 ).type( 'json' ).send( err ))
+  } catch (error) {
+    res.status( 500 ).send( APP_CONSTANTS.ERRORS.UNKNOWN.UNKNOWN_ERROR )
+    throw e;
+  }
+})
+
+router.delete('/', authEdit, ( req, res ) => {
+  try {
+    Controller.SuburbController.deleteSuburb( req.body )
+      .then( result => {
+        res.status( 200 ).type( 'json' ).send( result )
+      })
+      .catch( err => res.status( 400 ).type( 'json' ).send( err ))
+  } catch (error) {
+    res.status( 500 ).send( APP_CONSTANTS.ERRORS.UNKNOWN.UNKNOWN_ERROR )
+    throw e;
+  }
+})
 
 router.get( '/', authGet, ( req, res ) => {
   try {

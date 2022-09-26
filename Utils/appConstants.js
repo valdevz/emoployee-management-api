@@ -26,9 +26,13 @@ let ERRORS = {
     INVALID_USERID         : 'Invalid value for userId input.',
   },
   SUBURB: {
-    INVALID_NAME: 'Name of suburb must to be a string and can\'t be empty or undefined',
+    INVALID_NAME: 'Name of suburb must to be a string and can\'t be empty or undefined.',
     ALREADY_EXIST: 'This suburb already exist.',
-    COL_INVALID : 'Please avoid the word "Colonia" and their abbreviations'
+    COL_INVALID : 'Please avoid the word "Colonia" and their abbreviations.',
+    ID_IS_REQUIRED: 'The id is required.',
+    NAME_IS_REQUIRED: 'Name is required.',
+    SUBURB_DO_NOT_EXIST: 'The suburbs do not exist.',
+    SUBURB_DO_NOT_MODIFIED: 'The suburbs could not be modified.'
   },
   UNAUTHORIZED : {
     UNAUTHORIZED_TOKEN : 'Unauthorized token.',

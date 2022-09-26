@@ -18,8 +18,8 @@ let findAndRemove =  (model, conditions, update, options) => {
   return model.findOneAndRemove(conditions, update, options);
 }
 
-let remove = (model, condition) => {
-  return model.remove(condition);
+let deleteOne = (model, condition) => {
+  return model.deleteOne(condition);
 }
 
 let deleteMany = (model, condition) => {
@@ -57,7 +57,7 @@ module.exports = {
   findOne,
   findAndUpdate,
   findAndRemove,
-  remove,
+  deleteOne,
   deleteMany,
   count,
   insertOne,
