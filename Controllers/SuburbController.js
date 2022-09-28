@@ -69,7 +69,7 @@ class SuburbController {
   }
   static async getAllSuburbs(){
     try {
-      return await DAOManager.getData( Models.Suburb, {}, {name: 1, updatedDate: 1}, {})
+      return await DAOManager.getData( Models.Suburb, {}, {name: 1, updatedDate: 1}, {}).sort({'name': 1})
     } catch (error) {
       return { code: 500, message: error}
     }
