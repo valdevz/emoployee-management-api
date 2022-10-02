@@ -1,5 +1,6 @@
 module.exports = {
   UserController    : require( './UserController' ),
   AuthController    : require( './AuthController' ),
-  SuburbController  : require( './SuburbController' )
+  SuburbController  : require( './SuburbController' ),
+  EmployeeRols      : require( './EmployeeRols' )
 };

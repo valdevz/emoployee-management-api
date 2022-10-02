@@ -1,7 +1,7 @@
 const mongoose    = require( 'mongoose' ),
       Schema      = mongoose.Schema;
 
-let PositionJob = new Schema({
+let EmployeeRols = new Schema({
 
   name              :  { type: String, required: true, trim: true }, 
   totalPersons      :  { type: Number, required: true, trim: true },
@@ -10,4 +10,4 @@ let PositionJob = new Schema({
 
 })
 
-module.exports = mongoose.model( 'PositionJob', PositionJob );
+module.exports = mongoose.model( 'EmployeeRols', EmployeeRols );

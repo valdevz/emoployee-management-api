@@ -6,6 +6,14 @@ let ERRORS = {
   EDIT: {
     EMPTY_BODY    : 'You have to send at least one field to edit.',
   },
+  EMPLOYEE_ROLS: {
+    INVALID_NAME: 'Name of rol must to be a string and can\'t be empty or undefined.',
+    ALREADY_EXIST: 'This rol already exist.',
+    ID_IS_REQUIRED: 'The id is required.',
+    NAME_IS_REQUIRED: 'Name is required.',
+    ROL_DO_NOT_EXIST: 'The rol do not exist.',
+    ROL_DO_NOT_MODIFIED: 'The rol could not be modified.'
+  },
   LOGIN: {
     INVALID_CREDENTIALS : 'Login Failed: Your user ID/email or password is incorrect.',
     FIELDS_REQUIRED     : 'Email/user ID and password are required.'
@@ -45,6 +53,10 @@ let ERRORS = {
   },
 }
 
+let EMPLOYEE_ROLS = {
+  CREATED_SUCCESFULLY : 'Rol created succesfully.'
+}
+
 let ROLS = {
   ADMIN  : 'ADMIN',
   EDITOR : 'EDITOR',
@@ -58,5 +70,6 @@ let SUBURB = {
 module.exports = {
   ERRORS,
   ROLS,
-  SUBURB
+  SUBURB,
+  EMPLOYEE_ROLS
 }
