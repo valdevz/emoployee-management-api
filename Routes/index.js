@@ -5,7 +5,8 @@ const express        = require( 'express' ),
       Users          = require( './users' ),
       Suburb         = require( './suburb' ),
       Auth           = require( './auth' ),
-      EmployeeRols   = require( './employeeRols' );
+      EmployeeRols   = require( './employeeRols' ),
+      SupportJobs    = require( './supportJobs' );
       swaggerJsdoc   = require( "swagger-jsdoc" ),
       { options }    = require( '../Lib/swaggerDoc' ),
       swaggerUi      = require( "swagger-ui-express" );
@@ -21,6 +22,8 @@ app.use( '/auth', Auth )
 app.use( '/suburbs', Suburb)
 
 app.use( '/employee-rols', EmployeeRols )
+
+app.use( '/support-jobs', SupportJobs )
 
 const specs = swaggerJsdoc( options );
 app.use( '/',swaggerUi.serve, swaggerUi.setup( specs ) );

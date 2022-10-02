@@ -8,11 +8,11 @@ router.post('/', loginlimiter, (req, res) => {
     Controllers.AuthController.login( req.body )
     .then( result => {
       console.log('regresa: ', result)
-      return res.status( result.code ).send( result.message );
+      return res.status( result.code ).type( 'json' ).send( result.message );
     })
     .catch( err => {
       console.log( err )
-      return res.status( err.code ).send( err.message );
+      return res.status( err.code ).type( 'json' ).send( err.message );
     })
   } catch (error) {
     console.log( error );

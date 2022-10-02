@@ -34,13 +34,21 @@ let ERRORS = {
     INVALID_USERID         : 'Invalid value for userId input.',
   },
   SUBURB: {
-    INVALID_NAME: 'Name of suburb must to be a string and can\'t be empty or undefined.',
+    INVALID_NAME: 'Name of the suburb must to be a string and can\'t be empty or undefined.',
     ALREADY_EXIST: 'This suburb already exist.',
     COL_INVALID : 'Please avoid the word "Colonia" and their abbreviations.',
     ID_IS_REQUIRED: 'The id is required.',
     NAME_IS_REQUIRED: 'Name is required.',
     SUBURB_DO_NOT_EXIST: 'The suburbs do not exist.',
-    SUBURB_DO_NOT_MODIFIED: 'The suburbs could not be modified.'
+    SUBURB_DO_NOT_MODIFIED: 'The suburb could not be modified.'
+  },
+  SUPPORT_JOBS: {
+    INVALID_NAME: 'Name of the job must to be a string and can\'t be empty or undefined.',
+    ALREADY_EXIST: 'This job already exist.',
+    ID_IS_REQUIRED: 'The id is required.',
+    JOB_NAME_IS_REQUIRED: 'Name is required.',
+    JOB_DO_NOT_EXIST: 'The job do not exist.',
+    JOB_DO_NOT_MODIFIED: 'The job could not be modified.'
   },
   UNAUTHORIZED : {
     UNAUTHORIZED_TOKEN : 'Unauthorized token.',
@@ -67,9 +75,14 @@ let SUBURB = {
   CREATED_SUCCESFULLY : 'Suburb created succesfully.'
 }
 
+let SUPPORT_JOBS = {
+  CREATED_SUCCESFULLY : 'Support job created succesfully.'
+}
+
 module.exports = {
   ERRORS,
   ROLS,
   SUBURB,
-  EMPLOYEE_ROLS
+  EMPLOYEE_ROLS,
+  SUPPORT_JOBS
 }

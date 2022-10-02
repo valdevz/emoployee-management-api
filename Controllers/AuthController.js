@@ -40,18 +40,18 @@ class AuthController {
     return new Promise( async( resolve, reject ) => {
       let user = payload.user.trim().toString().toLowerCase();
       let pass = payload.pass;
-      if( !user ) return reject( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.FIELDS_REQUIRED } )
-      if( !pass ) return reject( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.FIELDS_REQUIRED } )
+      if( !user ) return resolve( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.FIELDS_REQUIRED } )
+      if( !pass ) return resolve( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.FIELDS_REQUIRED } )
 
       let condition = { $or: [ { userId: user }, { emailId: user } ] };
 
       let userData = await DAOManager.findOne(Models.User, condition, {}, {})
       console.log(userData)
-      if ( userData == null ) return reject( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.INVALID_CREDENTIALS } )
+      if ( userData == null ) return resolve( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.INVALID_CREDENTIALS } )
 
       const comparePass = await bcrypt.compare( pass, userData.password );
 
-      if ( !comparePass ) return reject( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.INVALID_CREDENTIALS } )
+      if ( !comparePass ) return resolve( { status: true, code: 400, message: APP_CONSTANTS.ERRORS.LOGIN.INVALID_CREDENTIALS } )
       console.log(userData)
       userData.password = undefined;
       userData.updatedDate = undefined;

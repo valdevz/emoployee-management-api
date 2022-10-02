@@ -3,10 +3,6 @@ const express = require( 'express' ),
       Controllers = require( '../Controllers/index' ),
       auth        = require( '../middleware/auth').verifyToken;
 
-router.get( '/', ( req, res ) => {
-  res.send( 'regiter endpoint' )
-} )
-
 router.post( '/', auth, ( req, res ) => {
   try {
     Controllers.UserController.Register( req.body )
