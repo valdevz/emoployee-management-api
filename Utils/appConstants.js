@@ -68,7 +68,7 @@ let EMPLOYEE_ROLS = {
 let ROLS = {
   ADMIN  : 'ADMIN',
   EDITOR : 'EDITOR',
-  VIEWER : 'USER',
+  VIEWER : 'VIEWER',
 }
 
 let SUBURB = {

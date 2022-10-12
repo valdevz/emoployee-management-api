@@ -23,7 +23,7 @@ router.post( '/editUser', authEdit, ( req, res ) => {
   try {
     Controller.UserController.editUser( req.body )
       .then( result => {
-        res.status( result.code ).send( result.message )
+        res.status( result.code ).type( 'json' ).send( result.message )
       } )
       .catch( result => {
         console.log(result)

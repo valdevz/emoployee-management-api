@@ -21,7 +21,6 @@ class UsersController {
             $match:{ $or: [
               { "uName": { $regex: new RegExp(name , "i") } },
               { "lastname": { $regex: new RegExp(name , "i") } },
-              { "secondLastname": { $regex: new RegExp(name , "i") } },
             ] },
           },
           {
@@ -29,7 +28,6 @@ class UsersController {
               userId: "$userId",
               uName: "$uName",
               lastname: "$lastname",
-              secondLastname: "$secondLastname",
               inCharge: "$inCharge",
               emailId: "$emailId",
               rol: "$rol",
@@ -55,15 +53,15 @@ class UsersController {
   static editUser ( payload ) {
     return new Promise( async ( resolve, reject ) => {
       let isValid = this.validEditableFields( payload )
-      if ( isValid.status ) return reject( isValid );
+      if ( isValid.status ) return resolve( isValid );
 
       let criteria = {userId : payload.userId}
-      let update = {...isValid.dataToUpdate}
-      update.updatedDate = Date.now()
+      let update = {$set: { ...isValid.dataToUpdate} }
+      update.$set.updatedDate = Date.now()
 
-      let result = await DAOManager.updateOne( Models.User, criteria, update, {} );
+      let result = await DAOManager.updateOne( Models.User, criteria, update, {userId:1} );
 
-      return resolve({ status: true, code: 200, message: 'yeah' } )
+      return resolve({ status: true, code: 200, message: result } )
     } )
   }
   
@@ -71,8 +69,34 @@ class UsersController {
     let mailRegex = new RegExp( '[a-z0-9]+@[a-z]+\.[a-z]{2,3}' );
     let phoneRegex = new RegExp( '^[0-9]{10}$' );
     let dataToUpdate = {}
+
     /* Making fields (optional) validation, userId is always required */
     if(payload.userId === undefined || payload.userId === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_USERID };
+
+    if(payload.uName !== undefined ) {
+      if ( payload.uName == '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_NAME };
+      
+      dataToUpdate.uName = payload.uName.trim();
+    }
+
+    if(payload.lastname !== undefined ) {
+      if ( payload.lastname == '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_LASTNAME };
+      
+      dataToUpdate.lastname = payload.lastname.trim();
+    }
+
+    if(payload.rol !== undefined ) {
+      if ( payload.rol == '') return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ROL }
+      if ( ! (payload.rol == APP_CONSTANTS.ROLS.ADMIN || payload.rol == APP_CONSTANTS.ROLS.EDITOR || payload.rol == APP_CONSTANTS.ROLS.VIEWER ) ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ROL };
+      
+      dataToUpdate.rol = payload.rol.trim();
+    }
+
+    if(payload.dateOfBirth !== undefined ) {
+      if ( payload.dateOfBirth == '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_BIRTH };
+      
+      dataToUpdate.dateOfBirth = payload.dateOfBirth.trim();
+    }
 
     if(payload.emailId !== undefined ) {
       if ( ! mailRegex.test(payload.emailId) ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_MAIL };
@@ -87,8 +111,7 @@ class UsersController {
     }
     if( payload.address !== undefined && payload.address.length !== 0) dataToUpdate.address = payload.address;
     
-    if(typeof payload.inCharge === 'object' ) dataToUpdate.inCharge = payload.inCharge;
-    
+    // if(typeof payload.inCharge === 'object' ) dataToUpdate.inCharge = payload.inCharge;
     if (Object.keys(dataToUpdate).length < 1) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.EDIT.EMPTY_BODY };
 
     return { status: false, dataToUpdate }
@@ -100,8 +123,6 @@ class UsersController {
     if( payload.uName === undefined || payload.uName === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_NAME };
     if( payload.phoneNo === undefined || payload.phoneNo === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_PHONE };
     if( payload.lastname === undefined || payload.lastname === '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_LASTNAME };
-    /* secondLastname could be empty because some people does not have second Lastname */
-    if( payload.secondLastname == undefined ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_SECONDLASTNAME };
     if( payload.dateOfBirth === undefined || payload.dateOfBirth ===  '' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_BIRTH };
     if( typeof payload.address != 'object' && payload.address.length != 2 ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ADDRESS };
     if( typeof payload.inCharge != 'object' ) return { status: true, code: 400, message: APP_CONSTANTS.ERRORS.REGISTER.INVALID_ARRAY };
@@ -182,7 +203,6 @@ class UsersController {
         uName: payload.uName,
         phoneNo: payload.phoneNo,
         lastname: payload.lastname,
-        secondLastname: payload.secondLastname,
         dateOfBirth: epoxDate,
         address: payload.address,
         password: encryptedPassword,
